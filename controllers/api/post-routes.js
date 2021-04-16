@@ -26,6 +26,9 @@ router.put('/:id', withAuth, async (req, res) => {
   try {
     const [affectedRows] = await Post.update(req.body, {
       // TODO: SET ID TO ID PARAMETER INSIDE WHERE CLAUSE CONDITION FIELD
+      where: {
+        id: req.params.id
+      }
 
     });
 
