@@ -1,5 +1,7 @@
 const router = require('express').Router();
-const { Post } = require('../../models/');
+const {
+  Post
+} = require('../../models/');
 const withAuth = require('../../utils/auth');
 
 router.post('/', withAuth, async (req, res) => {
@@ -8,8 +10,10 @@ router.post('/', withAuth, async (req, res) => {
   try {
     const newPost = await Post.create({
       // TODO: POST BODY SENT IN REQUEST. HINT USING SPREAD
+      ...req.body,
 
       // TODO: SET USERID TO LOGGEDIN USERID
+      userid: req.session.userid
 
     });
     res.json(newPost);
@@ -22,7 +26,7 @@ router.put('/:id', withAuth, async (req, res) => {
   try {
     const [affectedRows] = await Post.update(req.body, {
       // TODO: SET ID TO ID PARAMETER INSIDE WHERE CLAUSE CONDITION FIELD
-      
+
     });
 
     if (affectedRows > 0) {
