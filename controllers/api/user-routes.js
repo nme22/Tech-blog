@@ -1,13 +1,17 @@
 const router = require('express').Router();
-const { User } = require('../../models');
+const {
+  User
+} = require('../../models');
 
 // URL: /api/user
 router.post('/', async (req, res) => {
   try {
     const newUser = await User.create({
       // TODO: SET USERNAME TO USERNAME SENT IN REQUEST
+      username: req.params.username,
 
-      // TOD: SET PASSWORD TO PASSWORD SENT IN REQUEST
+      // TODO: SET PASSWORD TO PASSWORD SENT IN REQUEST
+      password: req.params.password
     });
 
     req.session.save(() => {
@@ -35,14 +39,18 @@ router.post('/login', async (req, res) => {
     });
 
     if (!user) {
-      res.status(400).json({ message: 'No user account found!' });
+      res.status(400).json({
+        message: 'No user account found!'
+      });
       return;
     }
 
     const validPassword = user.checkPassword(req.body.password);
 
     if (!validPassword) {
-      res.status(400).json({ message: 'No user account found!' });
+      res.status(400).json({
+        message: 'No user account found!'
+      });
       return;
     }
 
@@ -53,10 +61,15 @@ router.post('/login', async (req, res) => {
 
       // TODO: SET LOGGEDIN TO TRUE IN REQUEST SESSION
 
-      res.json({ user, message: 'You are now logged in!' });
+      res.json({
+        user,
+        message: 'You are now logged in!'
+      });
     });
   } catch (err) {
-    res.status(400).json({ message: 'No user account found!' });
+    res.status(400).json({
+      message: 'No user account found!'
+    });
   }
 });
 
