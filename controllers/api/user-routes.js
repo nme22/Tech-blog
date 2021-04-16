@@ -22,6 +22,7 @@ router.post('/', async (req, res) => {
       req.session.username = newUser.username;
 
       // TODO: SET LOGGEDIN TO TRUE IN REQUEST SESSION
+      req.session.loggedIn = true;
 
       res.json(newUser);
     });
